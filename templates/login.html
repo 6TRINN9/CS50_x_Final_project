@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %} Sign In {% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <div class="card bg-dark border-warning">
+            <div class="card-body">
+                <h3 class="text-warnign mb-4"><i class="bi bi-box-arrow-in-right"></i>Sign In</h3>
+                <form method="POST" action="/auth/login">
+                    <div class="mb-3">
+                        <lable class="form-label text-light">Email</lable>
+                        <input type="email" name="email" class="form-control bg-dark text-light border-secondary" required>
+                    </div>
+                    <div class="mb-3">
+                        <lable class="form-label text-light">Password</lable>
+                        <input type="password" name="password" class="form-control bg-dark text-light border-secondary" required>
+                    </div>
+                    <button class="btn btn-warnign w-100 fw-bold">Sign In</button>
+                </form>
+                <p class="text-center mt-3 mb-0 small text-muted">No account?
+                    <a href="/auth/register" class="text-warnign">Sign Up</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

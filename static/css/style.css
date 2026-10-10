@@ -1,0 +1,499 @@
+/* ============================================
+   CINEMA — Тема «Красный бархат»
+   ============================================ */
+
+:root {
+    --bg-dark: #1a0f0f;
+    --bg-darker: #0f0808;
+    --bg-card: #2d1b1b;
+    --bg-card-hover: #3d2323;
+    --border-subtle: #4a2a2a;
+    --border-strong: #6b3333;
+
+    --accent: #dc143c;
+    --accent-hover: #ff1744;
+    --accent-light: #ff4d6d;
+    --accent-dark: #8b0000;
+    --accent-glow: rgba(220, 20, 60, 0.4);
+
+    --text-main: #f5e6e6;
+    --text-muted: #a89999;
+    --text-dim: #7a6666;
+
+    --success: #4ade80;
+    --danger: #ef4444;
+}
+
+body {
+    background: linear-gradient(180deg, var(--bg-darker) 0%, var(--bg-dark) 100%);
+    color: var(--text-main);
+    min-height: 100vh;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* ============================================
+   🔴 Переопределение Bootstrap warning → red
+   ============================================ */
+.text-warning,
+.text-warning-emphasis {
+    color: var(--accent-light) !important;
+}
+
+.bg-warning {
+    background-color: var(--accent) !important;
+    color: #fff !important;
+}
+
+.border-warning {
+    border-color: var(--accent) !important;
+}
+
+.btn-warning {
+    background-color: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+    font-weight: 600;
+}
+
+.btn-warning:hover,
+.btn-warning:focus {
+    background-color: var(--accent-hover);
+    border-color: var(--accent-hover);
+    color: #fff;
+    box-shadow: 0 0 20px var(--accent-glow);
+}
+
+.btn-outline-warning {
+    color: var(--accent-light);
+    border-color: var(--accent);
+}
+
+.btn-outline-warning:hover {
+    background-color: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+}
+
+/* ============================================
+   🎬 Навигация
+   ============================================ */
+.navbar {
+    background: linear-gradient(90deg, var(--bg-darker), var(--bg-dark)) !important;
+    border-bottom: 1px solid var(--border-subtle);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+}
+
+.navbar-brand {
+    color: var(--accent-light) !important;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px var(--accent-glow);
+}
+
+.navbar-brand .bi-film {
+    color: var(--accent) !important;
+}
+
+.nav-link {
+    color: var(--text-main) !important;
+    transition: color .2s;
+}
+
+.nav-link:hover {
+    color: var(--accent-light) !important;
+}
+
+/* ============================================
+   🎞️ Hero-секция
+   ============================================ */
+.hero {
+    padding: 2rem 0;
+}
+
+.hero h1 {
+    text-shadow: 0 0 30px var(--accent-glow);
+}
+
+/* ============================================
+   🎟️ Карточки фильмов
+   ============================================ */
+.movie-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    transition: transform .25s, box-shadow .25s, border-color .25s;
+    overflow: hidden;
+}
+
+.movie-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 32px var(--accent-glow);
+    border-color: var(--accent);
+}
+
+.movie-card .card-img-top {
+    aspect-ratio: 2/3;
+    object-fit: cover;
+    transition: transform .3s;
+}
+
+.movie-card:hover .card-img-top {
+    transform: scale(1.03);
+}
+
+.movie-card .card-title {
+    color: var(--text-main);
+}
+
+.movie-card .card-body {
+    background: var(--bg-card);
+}
+
+/* ============================================
+   🎥 Кнопки сеансов
+   ============================================ */
+.session-btn {
+    min-width: 120px;
+    background: var(--bg-card) !important;
+    border: 1px solid var(--accent) !important;
+    color: var(--accent-light) !important;
+    transition: all .25s;
+}
+
+.session-btn:hover {
+    background: var(--accent) !important;
+    color: #fff !important;
+    box-shadow: 0 0 20px var(--accent-glow);
+    transform: translateY(-2px);
+}
+
+.session-btn .text-muted {
+    color: var(--text-dim) !important;
+}
+
+/* ============================================
+   📽️ Экран кинотеатра
+   ============================================ */
+.screen {
+    background: linear-gradient(180deg, rgba(220, 20, 60, 0.35), transparent);
+    color: var(--accent-light);
+    text-align: center;
+    padding: 12px;
+    border-radius: 50% 50% 0 0 / 20px 20px 0 0;
+    letter-spacing: 10px;
+    font-weight: bold;
+    font-size: 14px;
+    margin: 0 auto 30px;
+    max-width: 60%;
+    text-shadow: 0 0 15px var(--accent-glow);
+    border-top: 2px solid var(--accent);
+    border-left: 1px solid var(--accent);
+    border-right: 1px solid var(--accent);
+}
+
+/* ============================================
+   💺 Схема зала
+   ============================================ */
+.seat-map {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.seat-row {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+.row-label {
+    width: 24px;
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 12px;
+}
+
+/* Места */
+.seat {
+    width: 34px;
+    height: 34px;
+    border-radius: 6px 6px 3px 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .15s;
+    border: 2px solid transparent;
+    color: #fff;
+}
+
+.seat:hover:not(.taken):not(.reserved-other) {
+    transform: scale(1.15);
+    z-index: 2;
+}
+
+/* Свободно — бордовый с алой рамкой */
+.seat.available {
+    background: linear-gradient(135deg, #3d1a1a, #2d1010);
+    border-color: var(--accent);
+    color: var(--accent-light);
+}
+
+.seat.available:hover {
+    background: var(--accent);
+    color: #fff;
+    box-shadow: 0 0 12px var(--accent-glow);
+}
+
+/* Продано — тёмно-серое */
+.seat.taken {
+    background: #2a2020;
+    border-color: #4a3a3a;
+    cursor: not-allowed;
+    color: #6a5555;
+}
+
+/* Занято другим — тёмно-винный */
+.seat.reserved-other {
+    background: #4a1a1a;
+    border-color: #8b2020;
+    cursor: not-allowed;
+    color: #c88;
+}
+
+/* Ваш выбор — ярко-алый с пульсацией */
+.seat.mine {
+    background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+    border-color: #fff;
+    color: #fff;
+    animation: pulse-red 1.5s infinite;
+}
+
+@keyframes pulse-red {
+
+    0%,
+    100% {
+        box-shadow: 0 0 0 0 rgba(220, 20, 60, 0.7);
+    }
+
+    50% {
+        box-shadow: 0 0 0 10px rgba(220, 20, 60, 0);
+    }
+}
+
+/* ============================================
+   📋 Легенда
+   ============================================ */
+.seat-dot {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    margin-right: 4px;
+    vertical-align: middle;
+}
+
+.seat-dot.available {
+    background: var(--accent);
+}
+
+.seat-dot.taken {
+    background: #4a3a3a;
+}
+
+.seat-dot.reserved-other {
+    background: #8b2020;
+}
+
+.seat-dot.mine {
+    background: var(--accent-hover);
+}
+
+/* ============================================
+   🎫 Электронный билет
+   ============================================ */
+.ticket-card {
+    background: linear-gradient(135deg, var(--bg-card), var(--bg-darker));
+    border: 2px dashed var(--accent);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.ticket-info {
+    background: rgba(220, 20, 60, 0.08);
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid var(--border-subtle);
+}
+
+.booking-code {
+    border-top: 1px dashed var(--accent);
+    border-bottom: 1px dashed var(--accent);
+    padding: 12px 0;
+    margin: 16px 0;
+}
+
+/* ============================================
+   🎨 Формы и карточки
+   ============================================ */
+.card.bg-dark {
+    background: var(--bg-card) !important;
+    border-color: var(--border-subtle) !important;
+}
+
+.form-control.bg-dark {
+    background: var(--bg-darker) !important;
+    border-color: var(--border-strong) !important;
+    color: var(--text-main) !important;
+}
+
+.form-control.bg-dark:focus {
+    background: var(--bg-darker) !important;
+    border-color: var(--accent) !important;
+    box-shadow: 0 0 0 0.2rem var(--accent-glow) !important;
+    color: var(--text-main) !important;
+}
+
+.form-control::placeholder {
+    color: var(--text-dim) !important;
+}
+
+/* ============================================
+   ⏱ Таймер брони
+   ============================================ */
+#timer-box {
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark)) !important;
+    color: #fff !important;
+    box-shadow: 0 4px 20px var(--accent-glow);
+}
+
+#timer,
+#pay-timer {
+    color: #fff !important;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+/* ============================================
+   🎯 Панель действий
+   ============================================ */
+#action-panel {
+    background: var(--bg-card) !important;
+    border: 1px solid var(--accent) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* ============================================
+   🚨 Алерты
+   ============================================ */
+.alert-danger {
+    background: rgba(220, 20, 60, 0.15);
+    border-color: var(--accent);
+    color: var(--accent-light);
+}
+
+.alert-info {
+    background: rgba(100, 100, 120, 0.15);
+    border-color: var(--border-strong);
+    color: var(--text-main);
+}
+
+/* ============================================
+   🔗 Ссылки и текст
+   ============================================ */
+a {
+    color: var(--accent-light);
+    transition: color .2s;
+}
+
+a:hover {
+    color: var(--accent-hover);
+}
+
+.text-muted {
+    color: var(--text-muted) !important;
+}
+
+hr.border-warning {
+    border-color: var(--accent) !important;
+    opacity: 0.5;
+}
+
+/* ============================================
+   🖱 Спиннеры
+   ============================================ */
+.spinner-border.text-warning {
+    color: var(--accent) !important;
+}
+
+/* ============================================
+   🦶 Футер
+   ============================================ */
+footer {
+    border-top: 1px solid var(--border-subtle) !important;
+    color: var(--text-dim) !important;
+}
+
+/* ============================================
+   🖨 Печать билета
+   ============================================ */
+@media print {
+    body {
+        background: #fff !important;
+        color: #000 !important;
+    }
+
+    body * {
+        visibility: hidden;
+    }
+
+    .ticket-card,
+    .ticket-card * {
+        visibility: visible;
+    }
+
+    .ticket-card {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        border: 2px solid var(--accent);
+        background: #fff !important;
+        color: #000 !important;
+    }
+
+    .ticket-card .text-warning {
+        color: var(--accent) !important;
+    }
+}
+
+/* ============================================
+   ✨ Декоративные эффекты
+   ============================================ */
+::selection {
+    background: var(--accent);
+    color: #fff;
+}
+
+/* Плавная прокрутка */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Скроллбар */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-darker);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--accent-dark);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent);
+}

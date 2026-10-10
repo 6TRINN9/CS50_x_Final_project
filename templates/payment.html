@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block title %} Payment for ticket {% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card bg-dark border-warning">
+            <div class="card-header bg-warning text-dark fw-bold">
+                <i class="bi bi-credit-card-2-front"></i> Payment for a ticket
+            </div>
+            <div class="card-body">
+                <h5 class="text-warning">{{ ticket.session.movie.title }}</h5>
+                <p class="text-muted small mb-3">
+                    {{ ticket.session.start_time.strftime('%d.%m.%Y %H:%M') }}
+                      Hall “{{ticket.session.hall.name }}"
+                      Seat: row {{ ticket.seat.row_num }}, seat {{ ticket.seat.seat_num }}
+                </p>
+
+                <div class="d-flex justify-content-between mb-4 fs-4">
+                    <span>Payment:</span>
+                    <span class="text-warning fw-bold">{{ ticket.price }} $</span>
+                </div>
+
+                <form id="payment-form">
+                    <div class="mb-3">
+                        <label class="form-label text-light">Card number</label>
+                        <input type="text" class="form-control bg-dark text-light border-secondary"
+                            placeholder="4242 4242 4242 4242" maxlength="19" required>
+                    </div>
+                    <div class="row g-2 mb-3">
+                        <div class="col-6">
+                            <label class="form-label text-light">MM/YY</label>
+                            <input type="text" class="form-control bg-dark text-light border-secondary"
+                                placeholder="12/28" required>
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label text-light">CVC</label>
+                            <input type="text" class="form-control bg-dark text-light border-secondary"
+                                placeholder="123" maxlength="3" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-warning w-100 fw-bold" id="btn-pay">
+                        <i class="bi bi-lock-fill"></i>Pay {{ ticket.price }} $
+                    </button>
+                </form>
+                <small class="text-muted d-block mt-3 text-center">
+                    Reservation time remaining: <span id="pay-timer" class="text-warning fw-bold">-</span>
+                </small>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    window.TICKET_ID = {{ ticket.id }};
+    window.TTL_LEFT = {{ ttl }};
+</script>
+<script>
+    // Timer on the payment page
+    let left = window.TTL_LEFT;
+    const el = document.getElementById('pay-timer');
+    const tick = () => {
+        if (left <= 0) {
+            el.textContent = 'expired';
+            alert('Your reservation time has expired. Please choose another seat.');
+            location.href = '/';
+            return;
+        }
+        const m = Math.floor(left / 60), s = left % 60;
+        el.textContent = `${m}:${s.toString().padStart(2, '0')}`;
+        left--;
+    };
+    tick(); setInterval(tick, 1000);
+
+    // Payment processing
+    document.getElementById('payment-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = document.getElementById('btn-pay');
+        btn.disabled = true; btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Processing...';
+        try {
+            const res = await fetch(`/tickets/${window.TICKET_ID}/pay`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ payment_method: 'card' })
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.error || 'Payment error');
+            location.href = `/tickets/${window.TICKET_ID}/success`;
+        } catch (err) {
+            alert(err.message);
+            btn.disabled = false;
+            btn.innerHTML = '<i class="bi bi-lock-fill"></i>Pay';
+        }
+    });
+</script>
+{% endblock %}

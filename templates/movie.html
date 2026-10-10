@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %} {{ movie.title }} {% endblock %}
+
+{% block content %}
+<div class="row g-4">
+    <div class="col-md-4">
+        <img src="{{ movie.poster_url or '../static/images/no-poster-available.jpg'}}"
+            class="img-fluid rounded shadow" alt="">
+    </div>
+    <div class="col-md-8">
+        <h1 class="text-warning">{{ movie.title }}</h1>
+        <p class="lead text-muted">
+            {{ movie.duration_minutes}} min
+            {% if movie.rating %}
+            <span class="text-warning"><i class="bi bi-star-fill"></i>{{ movie.rating }}</span>
+            {% endif %}
+            {% if movie.release_date %}
+            {{ movie.release_date.strftime('%Y') }}
+            {% endif %}
+        </p>
+        <p>{{ movie.description or 'No descriptions'}}</p>
+
+        <hr class="border-warning">
+        <h3 class="h5 mb-3"><i class="bi bi-calendar-event"></i> Upcoming sessions</h3>
+
+        {% if sessions %}
+            <div class="d-flex flex-wrap gap-2">
+                {% for s in sessions %}
+                <a href="/session/{{ s.id }}/seats-page" class="btn btn-dark border-warning text-warning session-btn">
+                    <div class="small text-muted">{{ s.start_time.strftime('%d.%m') }}</div>
+                    <strong>{{ s.start_time.strftime('%H:%M') }}</strong>
+                    <div class="small">{{ s.hall.name }} - {{ s.price }} $</div>
+                </a>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-muted">No sessions.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

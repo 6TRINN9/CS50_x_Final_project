@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %} Select location - {{ session_info.movie.title }} {% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-8">
+        <h2 class="text-warning">{{ session_info.movie.title }}</h2>
+        <p class="text-muted mb-0">
+            <i class="bi bi-calendar3"></i> {{ session_info.start_time.strftime('%d.%m.%Y in %H:%M') }}
+            <i class="bi bi-door-open"></i> Hall “{{ session_info.hall.name }}”
+            <span class="text-warning fw-bold">{{ session_info.price }} ₽</span>
+        </p>
+    </div>
+    <div class="col-md-4 text-md-end">
+        <div id="timer-box" class="d-none bg-warning text-dark rounded p-3">
+            <small>Reservation expires in</small>
+            <div id="timer" class="fs-3 fw-bold">10:00</div>
+        </div>
+    </div>
+</div>
+
+<!-- Legend -->
+<div class="d-flex flex-wrap gap-3 mb-3 small">
+    <span><span class="seat-dot available"></span> Available</span>
+    <span><span class="seat-dot taken"></span> Sold</span>
+    <span><span class="seat-dot reserved-other"></span> Occupied by others</span>
+    <span><span class="seat-dot mine"></span>Your choice</span>
+</div>
+
+<!-- Screen -->
+<div class="screen mb-4">SCREEN</div>
+
+<!-- Hall layout -->
+<div id="seat-map" class="seat-map"></div>
+
+<!-- Action bar -->
+<div id="action-panel" class="mt-4 p-3 bg-dark rounded border border-warning d-none">
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+        <div>
+            <strong>Selected:</strong>
+            <span id="selected-info" class="text-warning">—</span>
+        </div>
+        <div class="d-flex gap-2">
+            <button id="btn-release" class="btn btn-outline-secondary btn-sm">
+                <i class="bi bi-x-circle"></i>Cancel
+            </button>
+            <a id="btn-pay" href="#" class="btn btn-warning btn-sm">
+                <i class="bi bi-credit-card"></i>Proceed to payment
+            </a>
+        </div>
+    </div>
+</div>
+
+<div id="loader" class="text-center my-3 d-none">
+    <div class="spinner-border text-warning" role="status"></div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    window.SESSION_ID = {{ session_info.id }};
+    window.TTL = {{ config.RESERVATION_TTL }};
+    window.CURRENT_USER = {{ current_user.id if current_user.is_authenticated else 'null' }};
+</script>
+<script src="{{ url_for('static', filename='js/seat_map.js') }}"></script>
+{% endblock %}
